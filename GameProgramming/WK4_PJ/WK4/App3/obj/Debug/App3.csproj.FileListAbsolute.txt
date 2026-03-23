@@ -1,0 +1,11 @@
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK4_PJ\WK4\App3\bin\Debug\App3.exe.config
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK4_PJ\WK4\App3\bin\Debug\App3.exe
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK4_PJ\WK4\App3\bin\Debug\App3.pdb
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK4_PJ\WK4\App3\obj\Debug\App3.csproj.AssemblyReference.cache
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK4_PJ\WK4\App3\obj\Debug\App3.Form1.resources
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK4_PJ\WK4\App3\obj\Debug\App3.Properties.Resources.resources
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK4_PJ\WK4\App3\obj\Debug\App3.csproj.GenerateResource.cache
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK4_PJ\WK4\App3\obj\Debug\App3.csproj.CoreCompileInputs.cache
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK4_PJ\WK4\App3\obj\Debug\App3.exe
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK4_PJ\WK4\App3\obj\Debug\App3.pdb
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK4_PJ\WK4\App3\obj\Debug\App3.exe.config

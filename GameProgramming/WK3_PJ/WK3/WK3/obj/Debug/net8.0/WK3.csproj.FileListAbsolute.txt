@@ -1,0 +1,14 @@
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK3_PJ\WK3\WK3\bin\Debug\net8.0\WK3.exe
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK3_PJ\WK3\WK3\bin\Debug\net8.0\WK3.deps.json
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK3_PJ\WK3\WK3\bin\Debug\net8.0\WK3.runtimeconfig.json
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK3_PJ\WK3\WK3\bin\Debug\net8.0\WK3.dll
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK3_PJ\WK3\WK3\bin\Debug\net8.0\WK3.pdb
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK3_PJ\WK3\WK3\obj\Debug\net8.0\WK3.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK3_PJ\WK3\WK3\obj\Debug\net8.0\WK3.AssemblyInfoInputs.cache
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK3_PJ\WK3\WK3\obj\Debug\net8.0\WK3.AssemblyInfo.cs
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK3_PJ\WK3\WK3\obj\Debug\net8.0\WK3.csproj.CoreCompileInputs.cache
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK3_PJ\WK3\WK3\obj\Debug\net8.0\WK3.dll
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK3_PJ\WK3\WK3\obj\Debug\net8.0\refint\WK3.dll
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK3_PJ\WK3\WK3\obj\Debug\net8.0\WK3.pdb
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK3_PJ\WK3\WK3\obj\Debug\net8.0\WK3.genruntimeconfig.cache
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK3_PJ\WK3\WK3\obj\Debug\net8.0\ref\WK3.dll

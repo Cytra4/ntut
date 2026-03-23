@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Lab 10 監控系統</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; background: #f4f4f4; padding: 20px; }
+        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 500px; margin: auto; }
+        .val { font-size: 3em; color: #007bff; font-weight: bold; margin: 10px 0; }
+        .status-box { padding: 10px; border-radius: 8px; margin: 15px 0; font-weight: bold; }
+        .working { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+        .idle { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        pre { background: #333; color: #00ff00; padding: 15px; border-radius: 5px; text-align: left; overflow-x: auto; font-family: monospace; }
+        button { background: #007bff; color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; font-size: 1.1em; }
+        button:disabled { background: #ccc; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>智慧環境運算監控系統</h2>
+        
+        <p>環境亮度 (ADC)</p>
+        <div id="adcValue" class="val">--</div>
+
+        <div id="statusBox" class="status-box idle">狀態: 系統就緒</div>
+
+        <button id="startBtn" onclick="triggerWork()">啟動核心運算</button>
+
+        <h3 style="margin-top: 30px; text-align: left;">運算輸出:</h3>
+        <pre id="resultDisplay">尚未有運算紀錄</pre>
+    </div>
+
+    <script>
+        function updateStatus() {
+            fetch('/api/status')
+                .then(res => res.json())
+                .then(data => {
+                    // 偵錯用：可以在瀏覽器 F12 Console 看到資料
+                    console.log("收到資料:", data);
+
+                    // 1. 更新亮度
+                    document.getElementById('adcValue').innerText = data.adc;
+
+                    // 2. 更新狀態與按鈕
+                    const box = document.getElementById('statusBox');
+                    const btn = document.getElementById('startBtn');
+                    if (data.isWorking) {
+                        box.innerText = "狀態: 運算中 (Thread B Working)...";
+                        box.className = "status-box working";
+                        btn.disabled = true;
+                    } else {
+                        box.innerText = "狀態: 閒置 (Idle)";
+                        box.className = "status-box idle";
+                        btn.disabled = false;
+                    }
+
+                    // 3. 更新運算結果 (關鍵修復點)
+                    if (data.lastResult) {
+                        document.getElementById('resultDisplay').innerText = data.lastResult;
+                    }
+                })
+                .catch(err => console.error("抓取資料失敗:", err));
+        }
+
+        function triggerWork() {
+            fetch('/api/start', { method: 'POST' })
+                .then(res => res.json())
+                .then(data => {
+                    if (!data.success) alert(data.message);
+                });
+        }
+
+        // 提高更新頻率，每 500ms 一次
+        setInterval(updateStatus, 500);
+    </script>
+</body>
+</html>

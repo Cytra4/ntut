@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const led1Form = document.getElementById('controll_div2'); // 你整個 form
+        const led1Submit = document.getElementById('led1_submit');
+        const led2Submit = document.getElementById('led2_submit');
+        const noDetectResult = document.getElementById('no_detect_result');
+
+        // helper to format "上午/下午 HH:MM" (24->12)
+        function formatTwTime(date) {
+            const h = date.getHours();
+            const m = date.getMinutes();
+            const period = (h < 12) ? '上午' : '下午';
+            // hour in 12-hour format with leading zero
+            let hh = h % 12;
+            if (hh === 0) hh = 12;
+            const mm = String(m).padStart(2, '0');
+            return `${period}${String(hh).padStart(2, '0')}:${mm}`;
+        }
+
+        // generic function to send led command
+        async function sendLed(ledName, action) {
+            try {
+                const res = await fetch('/led', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ led: ledName, action })
+                });
+                const j = await res.json();
+                if (j && j.ok) {
+                    const t = formatTwTime(new Date());
+                    noDetectResult.textContent = `${ledName} is now ${action} (${t})`;
+                } else {
+                    const err = j && j.err ? j.err : (j && j.msg ? j.msg : 'unknown');
+                    noDetectResult.textContent = `Error: ${err}`;
+                }
+            } catch (e) {
+                console.error('sendLed error', e);
+                noDetectResult.textContent = 'Error sending LED command';
+            }
+        }
+
+        // LED1 submit
+        led1Submit.addEventListener('click', (e) => {
+            e.preventDefault();
+            const checked = document.querySelector('input[name="led1_choice"]:checked');
+            if (!checked) { alert('請選 LED1 的 ON 或 OFF'); return; }
+            const action = checked.value.toUpperCase();
+            sendLed('LED1', action);
+        });
+
+        // LED2 submit
+        led2Submit.addEventListener('click', (e) => {
+            e.preventDefault();
+            const checked = document.querySelector('input[name="led2_choice"]:checked');
+            if (!checked) { alert('請選 LED2 的 ON 或 OFF'); return; }
+            const action = checked.value.toUpperCase();
+            sendLed('LED2', action);
+        });
+    });
+</script>
+
+<body>
+    <form id="mode_choose">
+        <h2>請選擇模式</h2>
+        <input type="radio" name="input_mode" value="DETECT">
+        <label>DETECT (自動感測)</label>
+        <input type="radio" name="input_mode" value="NO_DETECT">
+        <label>NO_DETECT (手動控制)</label>
+        <br><br>
+        <input id="mode_submit" type="submit" value="Submit (切換模式)">
+    </form>
+
+    <form id="controll_div1">
+        <h2>感測器偵測中 (Dynamic Blink)</h2>
+        <p>LED閃爍頻率隨亮度改變</p>
+        <h1 id="freq_result">69</h1>
+    </form>
+
+    <form id="controll_div2">
+        <h2>手動控制面板</h2>
+        <br>
+        <Label>LED 1 (Pin12):</Label>
+        <input type="radio" name="led1_choice" value="ON">
+        <label>ON</label>
+        <input type="radio" name="led1_choice" value="OFF">
+        <label>OFF</label>
+        <input id="led1_submit" type="submit" value="送出">
+        <hr>
+        <Label>LED 2 (Pin16):</Label>
+        <input type="radio" name="led2_choice" value="ON">
+        <label>ON</label>
+        <input type="radio" name="led2_choice" value="OFF">
+        <label>OFF</label>
+        <input id="led2_submit" type="submit" value="送出">
+
+        <p id="no_detect_result">AAA</p>
+    </form>
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('mode_choose');
+        const divDetect = document.getElementById('controll_div1');
+        const divNoDetect = document.getElementById('controll_div2');
+        const freqElem = document.getElementById('freq_result');
+        const adcElem = document.getElementById('no_detect_result'); // 我們暫用此顯示 ADC
+
+        // socket.io connect (same origin)
+        const socket = io();
+
+        socket.on('connect', () => {
+            console.log('socket connected');
+        });
+
+        // 接收即時 ADC/FREQ 更新
+        socket.on('adc_update', (data) => {
+            // data: {adc: 123, freq: 2.345 }
+            if (freqElem) {
+                // 顯示頻率與 ADC（你可以格式化顯示）
+                freqElem.textContent = `${data.freq.toFixed(3)} Hz`;
+            }
+            if (adcElem) {
+                adcElem.textContent = `ADC: ${data.adc}`;
+            }
+        });
+
+        socket.on('detector_stopped', (info) => {
+            console.log('detector_stopped', info);
+            if (freqElem) freqElem.textContent = 'Stopped';
+        });
+
+        socket.on('py_error', (msg) => {
+            console.error('python error', msg.text);
+        });
+
+        // 當使用者切換模式（使用你原先的 submit handler）
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const selected = form.querySelector('input[name="input_mode"]:checked');
+            if (!selected) { alert('請先選一個模式'); return; }
+            const mode = selected.value;
+
+            // call backend to start/stop python
+            try {
+                const res = await fetch('/set_mode', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ mode }),
+                });
+                const j = await res.json();
+                console.log('set_mode resp', j);
+            } catch (err) {
+                console.error('set_mode failed', err);
+            }
+
+            // 切換畫面顯示
+            if (mode === 'DETECT') {
+                divDetect.style.display = '';
+                divNoDetect.style.display = 'none';
+                if (freqElem) freqElem.textContent = 'Starting...';
+            } else {
+                divDetect.style.display = 'none';
+                divNoDetect.style.display = '';
+                if (freqElem) freqElem.textContent = 'Stopped';
+                if (adcElem) adcElem.textContent = '';
+            }
+        });
+    });
+</script>
+
+</html>

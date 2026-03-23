@@ -1,0 +1,53 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\zxzy2\\OneDrive\\Desktop\\code\\NTUT\\GameProgramming\\WK8_PJ\\\u8B1D\u653F\u8ED2_112590019\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{0B8AD58B-5D7A-4795-9765-8003A2D2BD3D}|PuzzleGame\\PuzzleGame.csproj|c:\\users\\zxzy2\\onedrive\\desktop\\code\\ntut\\gameprogramming\\wk8_pj\\\u8B1D\u653F\u8ED2_112590019\\puzzlegame\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B8AD58B-5D7A-4795-9765-8003A2D2BD3D}|PuzzleGame\\PuzzleGame.csproj|solutionrelative:puzzlegame\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B8AD58B-5D7A-4795-9765-8003A2D2BD3D}|PuzzleGame\\PuzzleGame.csproj|c:\\users\\zxzy2\\onedrive\\desktop\\code\\ntut\\gameprogramming\\wk8_pj\\\u8B1D\u653F\u8ED2_112590019\\puzzlegame\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{0B8AD58B-5D7A-4795-9765-8003A2D2BD3D}|PuzzleGame\\PuzzleGame.csproj|solutionrelative:puzzlegame\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\Users\\zxzy2\\OneDrive\\Desktop\\code\\NTUT\\GameProgramming\\WK8_PJ\\\u8B1D\u653F\u8ED2_112590019\\PuzzleGame\\Form1.cs",
+              "RelativeDocumentMoniker": "PuzzleGame\\Form1.cs",
+              "ToolTip": "C:\\Users\\zxzy2\\OneDrive\\Desktop\\code\\NTUT\\GameProgramming\\WK8_PJ\\\u8B1D\u653F\u8ED2_112590019\\PuzzleGame\\Form1.cs",
+              "RelativeToolTip": "PuzzleGame\\Form1.cs",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAAAFgAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-29T07:29:20.704Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Form1.cs [\u8A2D\u8A08]",
+              "DocumentMoniker": "C:\\Users\\zxzy2\\OneDrive\\Desktop\\code\\NTUT\\GameProgramming\\WK8_PJ\\\u8B1D\u653F\u8ED2_112590019\\PuzzleGame\\Form1.cs",
+              "RelativeDocumentMoniker": "PuzzleGame\\Form1.cs",
+              "ToolTip": "C:\\Users\\zxzy2\\OneDrive\\Desktop\\code\\NTUT\\GameProgramming\\WK8_PJ\\\u8B1D\u653F\u8ED2_112590019\\PuzzleGame\\Form1.cs [\u8A2D\u8A08]",
+              "RelativeToolTip": "PuzzleGame\\Form1.cs [\u8A2D\u8A08]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-29T07:29:16.425Z",
+              "EditorCaption": " [\u8A2D\u8A08]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

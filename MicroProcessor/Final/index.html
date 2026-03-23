@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智慧防盜＋警示燈系統 (模擬)</title>
+    <style>
+        :root{--panel-bg:#f7f7fb;--accent:#2b7cff;--danger:#d83a3a;--led-on:#4caf50;--led-off:#444}
+        body{font-family: "Microsoft JhengHei", Arial, sans-serif;margin:16px;background:#f0f4f8;color:#111}
+        h1{margin:0 0 12px}
+        .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .panel{background:var(--panel-bg);padding:12px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+        .panel h2{margin:0 0 8px;font-size:16px}
+        .controls{display:flex;gap:8px;align-items:center}
+        .device-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+        .device{display:flex;align-items:center;gap:8px;padding:6px;border-radius:6px;background:#fff;border:1px solid rgba(0,0,0,0.04)}
+        .led{width:20px;height:20px;border-radius:50%;background:var(--led-off);box-shadow:inset 0 -2px 4px rgba(0,0,0,0.2)}
+        .led.on{background:var(--led-on);box-shadow:0 0 8px rgba(76,175,80,0.6)}
+        .led.off{background:var(--led-off)}
+        .led.blinking{box-shadow:0 0 12px rgba(216,58,58,0.9)}
+        .status-text{font-weight:600}
+        .msg{margin-top:8px;padding:8px;border-radius:6px}
+        .msg.warn{background:rgba(216,58,58,0.12);color:var(--danger);}
+        .msg.ok{background:rgba(76,175,80,0.08);color:var(--led-on)}
+        .small{font-size:13px;color:#555}
+        .row{display:flex;gap:8px;align-items:center}
+        input[type=range]{width:100%}
+        .status-list{margin-top:8px}
+        .status-item{display:flex;justify-content:space-between;align-items:center;padding:6px 4px;border-radius:6px}
+        .btn{background:var(--accent);color:white;padding:6px 10px;border-radius:6px;border:none;cursor:pointer}
+        .btn.secondary{background:#6b6f78}
+        .btn.danger{background:var(--danger)}
+        label{display:flex;align-items:center;gap:6px}
+        .full-width{width:100%}
+        .footer-note{font-size:12px;color:#666;margin-top:8px}
+        .ldr-number{font-size:34px;font-weight:700;color:#153f7a;margin-left:8px}
+        .ldr-box{display:flex;align-items:center;gap:12px;padding:8px;background:#fff;border-radius:6px;border:1px solid rgba(0,0,0,0.04);margin-top:6px}
+    </style>
+</head>
+<body>
+    <h1>智慧防盜＋警示燈系統</h1>
+
+    <div class="grid">
+        <!-- 1 控制防盜模式 -->
+        <div class="panel" id="panel-control">
+            <h2>1. 控制防盜模式</h2>
+            <div class="controls">
+                <label><input type="radio" name="mode" value="manual" checked> 手動</label>
+                <label><input type="radio" name="mode" value="auto"> 自動（光敏電阻）</label>
+            </div>
+
+            <div id="manual-area">
+                <p class="small">手動模式：對每個門窗開啟或關閉偵測，開啟時 LED 恆亮，關閉則暗掉。</p>
+                <div class="device-list" id="manual-devices">
+                    <!-- devices injected by JS -->
+                </div>
+            </div>
+
+            <div id="auto-area" style="display:none;margin-top:10px">
+                <p class="small">自動模式：調整光敏電阻（LDR）值與門檻，當 LDR 數值 ≥ 門檻（過暗）時會自動全部啟用偵測。</p>
+                    <div>
+                        <div class="row"><strong>LDR 值：</strong>
+                            <div class="ldr-box"><div id="ldr-value" class="ldr-number">--</div></div>
+                        </div>
+                    </div>
+                    <div style="margin-top:8px">
+                        <div class="row"><strong>門檻：</strong><span id="ldr-threshold-val">500</span></div>
+                        <input id="ldr-threshold" type="range" min="0" max="1023" value="500">
+                    </div>
+            </div>
+        </div>
+
+        <!-- 2 小偷模擬器 -->
+        <div class="panel" id="panel-sim">
+            <h2>2. 小偷模擬器</h2>
+            <p class="small">模擬小偷闖入任一門窗：若該門窗有啟用偵測，觸發警報並使該 LED 閃爍，同時顯示紅色警告訊息；若未偵測，則顯示闖入成功訊息。</p>
+            <div class="device-list" id="sim-devices">
+                <!-- buttons injected by JS -->
+            </div>
+            <div id="sim-msg" class="msg" style="display:none;margin-top:8px"></div>
+        </div>
+
+        <!-- 3 警報狀況顯示 -->
+        <div class="panel" id="panel-status">
+            <h2>3. 警報狀況顯示</h2>
+            <div class="status-list" id="status-list">
+                <!-- status items injected by JS -->
+            </div>
+            <div style="margin-top:8px">
+                <button id="reset-alerts" class="btn secondary">解除所有警報（出現闖入者 → 安全）</button>
+            </div>
+        </div>
+
+        <!-- 4 LED 閃爍頻率調整 -->
+        <div class="panel" id="panel-blink">
+            <h2>4. LED 閃爍頻率調整</h2>
+            <p class="small">輸入閃爍間隔（毫秒），數字越小閃爍越快。預設 500 ms。</p>
+            <div class="row">
+                <input id="blink-interval" type="number" min="50" value="500" class="full-width">
+                <button id="apply-blink" class="btn">套用</button>
+            </div>
+            <p class="footer-note">備註：警報觸發時會使用此間隔做開/關交替顯示。</p>
+        </div>
+    </div>
+
+    <script>
+        // Backend-driven device state. We'll fetch from /api/devices
+        let devices = [];
+        let blinkInterval = 500; // ms
+
+        // init UI
+        const manualDevicesEl = document.getElementById('manual-devices');
+        const simDevicesEl = document.getElementById('sim-devices');
+        const statusListEl = document.getElementById('status-list');
+        const simMsgEl = document.getElementById('sim-msg');
+        const blinkTimers = {}; // map deviceId -> intervalId
+
+        function createDeviceControls() {
+            manualDevicesEl.innerHTML = '';
+            simDevicesEl.innerHTML = '';
+            statusListEl.innerHTML = '';
+
+            devices.forEach(d => {
+                // manual control
+                const dev = document.createElement('div'); dev.className='device';
+                const led = document.createElement('div'); led.className='led off'; led.id = 'led-'+d.id;
+                const label = document.createElement('div'); label.innerHTML = `<div>${d.name}</div><div class="small">${d.type}</div>`;
+                const toggle = document.createElement('label');
+                const cb = document.createElement('input'); cb.type='checkbox'; cb.checked = d.detection;
+                cb.addEventListener('change', ()=>{ setDetection(d.id, cb.checked); });
+                toggle.appendChild(cb); toggle.appendChild(document.createTextNode(' 偵測'));
+                dev.appendChild(led); dev.appendChild(label); dev.appendChild(toggle);
+                manualDevicesEl.appendChild(dev);
+
+                // sim control (button)
+                const sim = document.createElement('div'); sim.className='device';
+                const simLabel = document.createElement('div'); simLabel.textContent = d.name;
+                const btn = document.createElement('button'); btn.className='btn'; btn.textContent='嘗試闖入';
+                btn.addEventListener('click', ()=> attemptIntrude(d.id));
+                sim.appendChild(simLabel); sim.appendChild(btn);
+                simDevicesEl.appendChild(sim);
+
+                // status list
+                const sItem = document.createElement('div'); sItem.className='status-item'; sItem.id='status-'+d.id;
+                const left = document.createElement('div'); left.textContent = d.name;
+                const right = document.createElement('div'); right.innerHTML = `<span class="status-text" id="stat-${d.id}">${d.status}</span>`;
+                sItem.appendChild(left); sItem.appendChild(right);
+                statusListEl.appendChild(sItem);
+
+                updateLedVisual(d.id);
+            });
+        }
+
+        function stopBlinkById(id){
+            if(blinkTimers[id]){
+                clearInterval(blinkTimers[id]);
+                delete blinkTimers[id];
+            }
+            // find device object and clear blinking flag
+            const od = devices.find(x=>x.id===id);
+            if(od) { od.blinking = false; }
+            const el = document.getElementById('led-'+id);
+            if(el) { el.classList.remove('blinking'); }
+        }
+
+        function setDetection(id, on) {
+            // send request to backend to set detection
+            fetch(`/api/device/${id}/detection`, {
+                method: 'POST', headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({ detection: !!on })
+            }).then(r=>r.json()).then(data=>{
+                if(data && data.device){
+                    const idx = devices.findIndex(x=>x.id===id);
+                    if(idx>=0) devices[idx] = data.device;
+                    // clear any lingering blink timers when detection changes
+                    stopBlinkById(id);
+                    updateStatusDisplay(id);
+                    updateLedVisual(id);
+                }
+            }).catch(err=>console.error(err));
+        }
+
+        function updateLedVisual(id) {
+            const d = devices.find(x=>x.id===id);
+            const el = document.getElementById('led-'+id);
+            if(!el) return;
+            el.classList.remove('on','off','blinking');
+            if(d.blinking) {
+                el.classList.add('blinking');
+            } else if(d.detection) {
+                el.classList.add('on');
+            } else {
+                el.classList.add('off');
+            }
+        }
+
+        function updateStatusDisplay(id){
+            const d = devices.find(x=>x.id===id);
+            const statEl = document.getElementById('stat-'+id);
+            if(statEl) statEl.textContent = d.status;
+        }
+
+        function attemptIntrude(id){
+            fetch(`/api/intrude/${id}`, { method:'POST' }).then(r=>r.json()).then(data=>{
+                if(!data) return;
+                const d = data.device || devices.find(x=>x.id===id);
+                const idx = devices.findIndex(x=>x.id===id);
+                if(idx>=0) devices[idx] = d;
+                if(data.alarm) {
+                    // alarm triggered
+                    startBlink(d);
+                    showSimMessage('警示燈觸發，有小偷闖入：'+d.name, 'warn');
+                } else {
+                    stopBlink(d);
+                    showSimMessage('闖入成功：'+d.name, 'ok');
+                }
+                updateStatusDisplay(id);
+                updateLedVisual(id);
+            }).catch(err=>console.error(err));
+        }
+
+        function showSimMessage(text, type){
+            simMsgEl.style.display='block';
+            simMsgEl.textContent = text;
+            simMsgEl.className = 'msg ' + (type==='warn' ? 'warn' : 'ok');
+            // auto-hide after 4s for success messages
+            if(type==='ok') setTimeout(()=>{ simMsgEl.style.display='none'; }, 2500);
+        }
+
+        function startBlink(d){
+            if(blinkTimers[d.id]) return; // already blinking
+            d.blinking = true;
+            const id = setInterval(()=>{
+                const el = document.getElementById('led-'+d.id);
+                if(!el) return;
+                el.classList.toggle('on');
+                el.classList.toggle('off');
+            }, blinkInterval);
+            blinkTimers[d.id] = id;
+            updateLedVisual(d.id);
+        }
+
+        function stopBlink(d){
+            if(blinkTimers[d.id]){ clearInterval(blinkTimers[d.id]); delete blinkTimers[d.id]; }
+            d.blinking = false;
+            updateLedVisual(d.id);
+        }
+
+        // Reset alerts: for devices with status '出現闖入者', stop blinking and set to 安全 (LED 恆亮)
+        document.getElementById('reset-alerts').addEventListener('click', ()=>{
+            fetch('/api/reset', { method:'POST' }).then(r=>r.json()).then(data=>{
+                if(data && data.devices){ devices = data.devices; createDeviceControls(); }
+                simMsgEl.style.display='none';
+            }).catch(err=>console.error(err));
+        });
+
+        // Blink interval apply
+        document.getElementById('apply-blink').addEventListener('click', ()=>{
+            const val = parseInt(document.getElementById('blink-interval').value)||500;
+            fetch('/api/blink', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ interval: val })})
+            .then(r=>r.json()).then(data=>{ if(data && data.blinkInterval) blinkInterval = data.blinkInterval; })
+            .catch(err=>console.error(err));
+        });
+
+        // Mode switching (manual / auto)
+        document.querySelectorAll('input[name="mode"]').forEach(r=>{
+            r.addEventListener('change', ()=>{
+                const mode = document.querySelector('input[name="mode"]:checked').value;
+                document.getElementById('manual-area').style.display = (mode==='manual')? 'block' : 'none';
+                document.getElementById('auto-area').style.display = (mode==='auto')? 'block' : 'none';
+                if(mode==='auto') { startLdrPolling(); } else { stopLdrPolling(); }
+            });
+        });
+
+        // LDR controls (backend-driven read). Poll while in auto mode.
+        const ldrVal = document.getElementById('ldr-value');
+        const ldrThreshold = document.getElementById('ldr-threshold');
+        const ldrThreshVal = document.getElementById('ldr-threshold-val');
+        ldrThreshold.addEventListener('input', ()=>{ ldrThreshVal.textContent = ldrThreshold.value; if(document.querySelector('input[name="mode"]:checked').value==='auto') {
+            // immediately apply with current fetched value
+            fetch('/api/ldr/read').then(r=>r.json()).then(d=>{ if(d && d.ok){ fetch('/api/ldr', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ value: d.value, threshold: parseInt(ldrThreshold.value,10) })}); } });
+        }});
+
+        let ldrPollInterval = null;
+        function startLdrPolling(){
+            if(ldrPollInterval) return;
+            ldrPollInterval = setInterval(()=>{
+                fetch('/api/ldr/read').then(r=>r.json()).then(data=>{
+                    if(!data || !data.ok) return;
+                    document.getElementById('ldr-value').textContent = data.value;
+                    const t = parseInt(document.getElementById('ldr-threshold').value,10) || 0;
+                    fetch('/api/ldr', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ value: data.value, threshold: t })})
+                    .then(r=>r.json()).then(resp=>{ if(resp && resp.devices){ devices = resp.devices; createDeviceControls(); } });
+                }).catch(err=>console.error(err));
+            }, 1000);
+        }
+        function stopLdrPolling(){ if(ldrPollInterval){ clearInterval(ldrPollInterval); ldrPollInterval = null; } }
+
+        // initialize: fetch device state from backend
+        fetch('/api/devices').then(r=>r.json()).then(data=>{
+            if(data){ devices = data.devices || []; blinkInterval = data.blinkInterval || blinkInterval; }
+            createDeviceControls();
+        }).catch(err=>{ console.error('fetch devices failed', err); createDeviceControls(); });
+
+        // expose helper for debugging
+        window.__devices = devices;
+    </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+using Problem2.Properties;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Problem2
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        class SimpleSprite
+        {
+            System.Windows.Forms.Timer uiTimer = null;
+            Image image = null;
+            Graphics g;
+            Panel p;
+
+            int spriteCount = 0;
+            public SimpleSprite()
+            {
+                uiTimer = new System.Windows.Forms.Timer();
+                uiTimer.Interval = 50;
+                uiTimer.Tick += UiTimer_Tick;
+            }
+
+            public void setImage(Image image)
+            {
+                this.image = image;
+            }
+
+            public void setGraphic(Graphics g)
+            {
+                this.g = g;
+            }
+
+            public void setPanel(Panel p)
+            {
+                this.p = p;
+            }
+
+            public void start()
+            {
+                uiTimer.Start();
+            }
+
+            int[] index2RC(int index, int col)
+            {
+                int[] rc = new int[2];
+                rc[0] = index / col;
+                rc[1] = index % col;
+                return rc;
+            }
+
+            private void UiTimer_Tick(object sender, EventArgs e)
+            {
+                int frames = 23;
+                int cols = 5;
+                int frameSize = 64;
+
+                var context = BufferedGraphicsManager.Current;
+                BufferedGraphics buffer = null;
+                buffer = context.Allocate(g, new Rectangle(0, 0, p.ClientSize.Width, p.ClientSize.Height));
+                buffer.Graphics.Clear(p.BackColor);
+
+                g.Clear(p.BackColor);
+
+                int[] rc = index2RC(spriteCount, cols);
+                buffer.Graphics.DrawImage(image,
+                    new Rectangle(0, 0, frameSize, frameSize),
+                    new Rectangle(rc[1] * frameSize, rc[0] * frameSize, frameSize, frameSize),
+                    GraphicsUnit.Pixel
+                );
+                buffer.Render(g);
+                buffer?.Dispose();
+
+                spriteCount++;
+
+                if (spriteCount >= frames)
+                {
+                    g.Clear(p.BackColor);
+                    uiTimer.Stop();
+                }
+            }
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SimpleSprite sprite = new SimpleSprite();
+            Image explosion = Resources.explosion;
+            sprite.setImage(explosion);
+            sprite.setPanel(panel1);
+            sprite.setGraphic(panel1.CreateGraphics());
+            sprite.start();
+        }
+    }
+}

@@ -1,0 +1,75 @@
+using System;
+using System.Runtime.InteropServices;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace Homework1
+{
+    class HW1
+    {
+        static void Main(string[] args)
+        {
+            int LCounter = 0;
+            int RCounter = 0;
+            for (int i = 1; i < 10; i++)
+            {
+                string line = "";
+                if (i == 1 || i == 5 || i == 9)
+                {
+                    for (int j = 1; j < 10; j++)
+                    {
+                        if (j == 1)
+                        {
+                            line += $"{i}x{j}={i * j} ";
+                        }
+                        else
+                        {
+                            line += $"{i}x{j}={i * j,2} ";
+                        }
+                    }
+
+                    if (i == 5)
+                    {
+                        LCounter -= 1;
+                        RCounter -= 1;
+                    }
+                }
+                else
+                {
+                    line = $"{i}x1={i} ";
+                    for (int j = 0; j < LCounter; j++)
+                    {
+                        line += "       ";
+                    }
+                    line += $"{i}x{LCounter + 2}={i * (LCounter+2),2} ";
+                    for (int j = 0; j < 3 - LCounter; j++)
+                    {
+                        line += "       ";
+                    }
+
+                    for (int j = RCounter; j < 3; j++)
+                    {
+                        line += "       ";
+                    }
+                    for (int j = 9-RCounter; j < RCounter; j++)
+                    {
+                        line += $"{i}x{9 - j}={i * (9 - j),2} ";
+                    }
+
+                    line += $"{i}x9={i * 9,2} ";
+
+                    if (i < 5)
+                    {
+                        LCounter += 1;
+                        RCounter += 1;
+                    }
+                    else
+                    {
+                        LCounter -= 1;
+                        RCounter -= 1;
+                    }
+                }
+                Console.WriteLine(line);
+            }
+        }
+    }
+}

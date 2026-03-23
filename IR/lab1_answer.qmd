@@ -1,0 +1,302 @@
+---
+title: "Lab 1: Descriptive Statistics in R"
+author: "Dr. Shonn Cheng"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Welcome to Statistics in Education!
+
+This lab covers the following topics:
+
+-   Data Structure
+
+-   Frequency Tables
+
+-   Central Tendency and Variability
+
+-   Graphic Summaries
+
+-   APA-Style Reporting
+
+# Load Packages
+
+```{r}
+#install.packages("tidyverse")
+#install.packages("haven")
+#install.packages("psych")
+#install.packages("writexl")
+library(tidyverse)
+library(haven)
+library(psych)
+library(writexl)
+```
+
+# Data Structure
+
+Using the `summersurvey.sav` dataset (imported into R as a data frame)
+
+![](summer%20break%20survey.png)
+
+```{r}
+#load data
+summer <- read_sav("summersurvey.sav")
+
+#check the data structure
+summer
+
+glimpse(summer)
+
+str(summer)
+
+#change variable type
+summer<-summer %>% 
+  mutate(gender = as.factor(gender))
+
+glimpse(summer)
+```
+
+Are there any other variables whose variable type need to be changed?
+
+```{r}
+
+#Degree
+
+summer<-summer %>% 
+  mutate(Degree = as.factor(Degree))
+
+#Goal
+
+summer<-summer %>% 
+  mutate(Goal = as.factor(Goal))
+
+summer
+```
+
+# Frequency Table
+
+A frequency table takes a set of scores and tabulates them in order from highest to lowest (or lowest to highest), grouping together all individuals who have the same (or same range of) score(s).
+
+## Get Frequency Tables in R
+
+To create a frequency table in R, use the `table()` function:
+
+```{r}
+# Example: Frequency table for a categorical variable
+
+summer
+
+table(summer$gender)
+```
+
+What percentage of students plan to catch up work in the summer break? What percentage plan to “just relax”?
+
+```{r}
+
+#frequency table
+table(summer$Goal)
+
+#solution 1
+prop.table(table(summer$Goal))*100
+
+#solution 2
+summer %>% 
+  group_by(Goal) %>% 
+  summarize(n = n()) %>% 
+  mutate(percent = n/13*100)
+```
+
+## Practice
+
+Using the `lab 1 example data.sav` dataset (imported into R as a data frame):
+
+![](lab1.png)
+
+1.  Check the data structure. Are there any variables whose variable type need to be changed?
+
+2.  How many students study social sciences? How many study physical sciences?
+
+3.  List all the possible values of College GPA in descending order. What is the highest score? What percentage of students got that score?
+
+```{r}
+#load data
+lab1 <- read_sav("lab 1 example data.sav")
+
+lab1
+
+glimpse(lab1)
+
+#change varible type
+lab1<-lab1 %>% mutate(gender = as.factor(gender),
+                race = as.factor(race),
+                scitype = as.factor(scitype),
+                stutype = as.factor(stutype)
+                )
+
+#example: frequency table for major
+#scitype(1=Social; 2=Physical)
+
+table(lab1$scitype)
+
+#example: frequency table for college GPA
+table(lab1$cgpa)
+
+#descending order
+lab1 %>% 
+  count(cgpa) %>% 
+  arrange(desc(cgpa))
+
+#percentage
+lab1 %>% 
+  group_by(cgpa) %>%
+  summarize(n = n()) %>% 
+  arrange(desc(cgpa)) %>% 
+  mutate(percent = n/44*100)
+```
+
+# Descriptive Statistics
+
+Descriptive statistics provide a quantitative description of the main features of a collection of data. Examples include measures of central tendency and variability.
+
+## Central Tendency and Variability
+
+-   **Central Tendency**: Mean, Median, Mode
+
+-   **Variability**: Range, Interquartile Range (IQR), Variance, Standard Deviation (SD)
+
+### Measures of Variability
+
+-   **Range**: `max - min`
+
+-   **Interquartile Range (IQR)**: `Q3 - Q1` (middle 50% of the distribution)
+
+-   **Variance & Standard Deviation**: Measures of average deviation from the mean.
+
+```{r}
+
+#solution1
+summary(summer)
+
+#solution2
+describe(summer)
+```
+
+## Practice
+
+Using the `lab 1 example data.sav` dataset:
+
+1.  Calculate the mean, median, and standard deviation of age, grev, and greq.
+
+```{r}
+
+summary(lab1)
+
+describe(lab1)
+```
+
+# Graphic Summaries
+
+Graphic summaries (charts) are useful for visualizing data distributions.
+
+## Creating Charts in R
+
+### Bar Charts
+
+```{r}
+
+#categorical variable
+
+summer %>% 
+  ggplot(mapping = aes (x = gender)) +
+  geom_bar()
+```
+
+### Histograms
+
+```{r}
+
+#continuous variable
+
+summer %>% 
+  ggplot(mapping = aes (x = Temp)) +
+  geom_histogram()
+
+summer %>% 
+  ggplot(mapping = aes (x = Temp)) +
+  geom_freqpoly()
+
+summer %>% 
+  ggplot(mapping = aes (x = Temp)) +
+  geom_density()
+```
+
+### Boxplots
+
+```{r}
+
+#continuous variable by group
+
+summer %>% 
+  ggplot(mapping = aes (x = gender, y = Temp)) +
+  geom_boxplot()
+```
+
+## Practice
+
+Using the `lab 1 example data.sav` dataset:
+
+1.  Create a bar chart for `race`.
+
+2.  Create a histogram for `greq`.
+
+3.  Create a boxplot to show `greq` by `race`.
+
+```{r}
+
+#task 1
+lab1 %>% 
+  ggplot(mapping = aes (x = race)) +
+  geom_bar()
+
+#task 2
+lab1 %>% 
+  ggplot(mapping = aes (x = greq)) +
+  geom_histogram()
+
+#task 3
+lab1 %>% 
+  ggplot(mapping = aes (x = greq)) +
+  geom_density()
+
+lab1 %>% 
+  ggplot(mapping = aes (x = race, y = greq)) +
+  geom_boxplot()
+```
+
+# APA-Style Reporting
+
+```{r}
+summer %>% 
+  select(Temp:Anxious) %>% 
+  describe()
+
+des<-summer %>% 
+  select(Temp:Anxious) %>% 
+  describe()
+
+write_xlsx(des, "des.xlsx")
+```
+
+## Practice
+
+Using the `lab 1 example data.sav` dataset:
+
+1.  Generate descriptive statistics for `age`, `grev`, `greq`, `cgpa`, and `ggpa`.
+
+2.  Format the results in an APA-style table, ensuring appropriate labels and formatting.
+
+3.  Write a brief summary interpreting the descriptive statistics.

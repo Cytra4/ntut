@@ -1,0 +1,11 @@
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK8_PJ\謝政軒_112590019\PuzzleGame\bin\Debug\PuzzleGame.exe.config
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK8_PJ\謝政軒_112590019\PuzzleGame\bin\Debug\PuzzleGame.exe
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK8_PJ\謝政軒_112590019\PuzzleGame\bin\Debug\PuzzleGame.pdb
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK8_PJ\謝政軒_112590019\PuzzleGame\obj\Debug\PuzzleGame.csproj.AssemblyReference.cache
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK8_PJ\謝政軒_112590019\PuzzleGame\obj\Debug\PuzzleGame.Form1.resources
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK8_PJ\謝政軒_112590019\PuzzleGame\obj\Debug\PuzzleGame.Properties.Resources.resources
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK8_PJ\謝政軒_112590019\PuzzleGame\obj\Debug\PuzzleGame.csproj.GenerateResource.cache
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK8_PJ\謝政軒_112590019\PuzzleGame\obj\Debug\PuzzleGame.csproj.CoreCompileInputs.cache
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK8_PJ\謝政軒_112590019\PuzzleGame\obj\Debug\PuzzleGame.exe
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK8_PJ\謝政軒_112590019\PuzzleGame\obj\Debug\PuzzleGame.pdb
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK8_PJ\謝政軒_112590019\PuzzleGame\obj\Debug\PuzzleGame.exe.config

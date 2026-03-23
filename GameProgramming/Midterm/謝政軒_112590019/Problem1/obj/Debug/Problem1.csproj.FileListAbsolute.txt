@@ -1,0 +1,11 @@
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\Midterm\謝政軒_112590019\Problem1\bin\Debug\Problem1.exe.config
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\Midterm\謝政軒_112590019\Problem1\bin\Debug\Problem1.exe
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\Midterm\謝政軒_112590019\Problem1\bin\Debug\Problem1.pdb
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\Midterm\謝政軒_112590019\Problem1\obj\Debug\Problem1.csproj.AssemblyReference.cache
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\Midterm\謝政軒_112590019\Problem1\obj\Debug\Problem1.Properties.Resources.resources
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\Midterm\謝政軒_112590019\Problem1\obj\Debug\Problem1.csproj.GenerateResource.cache
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\Midterm\謝政軒_112590019\Problem1\obj\Debug\Problem1.csproj.CoreCompileInputs.cache
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\Midterm\謝政軒_112590019\Problem1\obj\Debug\Problem1.exe
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\Midterm\謝政軒_112590019\Problem1\obj\Debug\Problem1.pdb
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\Midterm\謝政軒_112590019\Problem1\obj\Debug\Problem1.exe.config
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\Midterm\謝政軒_112590019\Problem1\obj\Debug\Problem1.Form1.resources

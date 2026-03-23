@@ -1,0 +1,53 @@
+#mode_choose{
+    background-color: rgb(205, 205, 205);
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#mode_submit{
+    background-color: rgb(66, 106, 252);
+    color: white;
+    padding: 5px
+}
+
+#controll_div1{
+    border-style: solid;
+    border-radius: 5px;
+    border-color: gray;
+    padding: 15px
+}
+
+#controll_div2{
+    border-style: solid;
+    border-radius: 5px;
+    border-color: gray;
+    padding: 15px
+}
+
+#freq_result{
+    color:red;
+    font-size: 50;
+    text-align: center;
+}
+
+#led1_submit{
+    background-color: rgb(66, 106, 252);
+    color: white;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#led2_submit{
+    background-color: rgb(66, 106, 252);
+    color: white;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#no_detect_result{
+    color:rgb(0, 140, 255)
+}

@@ -1,0 +1,7 @@
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK4_PJ\WK4\WK4\bin\Debug\WK4.exe.config
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK4_PJ\WK4\WK4\bin\Debug\WK4.exe
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK4_PJ\WK4\WK4\bin\Debug\WK4.pdb
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK4_PJ\WK4\WK4\obj\Debug\WK4.csproj.AssemblyReference.cache
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK4_PJ\WK4\WK4\obj\Debug\WK4.csproj.CoreCompileInputs.cache
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK4_PJ\WK4\WK4\obj\Debug\WK4.exe
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK4_PJ\WK4\WK4\obj\Debug\WK4.pdb

@@ -1,0 +1,11 @@
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK7_PJ\謝政軒_112590019\MemoryGame\bin\Debug\MemoryGame.exe.config
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK7_PJ\謝政軒_112590019\MemoryGame\bin\Debug\MemoryGame.exe
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK7_PJ\謝政軒_112590019\MemoryGame\bin\Debug\MemoryGame.pdb
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK7_PJ\謝政軒_112590019\MemoryGame\obj\Debug\MemoryGame.csproj.AssemblyReference.cache
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK7_PJ\謝政軒_112590019\MemoryGame\obj\Debug\MemoryGame.Form1.resources
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK7_PJ\謝政軒_112590019\MemoryGame\obj\Debug\MemoryGame.Properties.Resources.resources
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK7_PJ\謝政軒_112590019\MemoryGame\obj\Debug\MemoryGame.csproj.GenerateResource.cache
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK7_PJ\謝政軒_112590019\MemoryGame\obj\Debug\MemoryGame.csproj.CoreCompileInputs.cache
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK7_PJ\謝政軒_112590019\MemoryGame\obj\Debug\MemoryGame.exe
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK7_PJ\謝政軒_112590019\MemoryGame\obj\Debug\MemoryGame.pdb
+C:\Users\zxzy2\OneDrive\Desktop\code\NTUT\GameProgramming\WK7_PJ\謝政軒_112590019\MemoryGame\obj\Debug\MemoryGame.exe.config

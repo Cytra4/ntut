@@ -1,0 +1,2 @@
+/home/nvidia/Desktop/LAB/Lab05_2/demo.o
+

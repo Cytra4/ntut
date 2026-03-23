@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\zxzy2\\OneDrive\\Desktop\\code\\NTUT\\GameProgramming\\WK2_PJ\\Homework\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F61FCA28-53FD-4FCC-B156-9FFEB4244880}|Homework\\Homework.csproj|c:\\users\\zxzy2\\onedrive\\desktop\\code\\ntut\\gameprogramming\\wk2_pj\\homework\\homework\\problem4.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F61FCA28-53FD-4FCC-B156-9FFEB4244880}|Homework\\Homework.csproj|solutionrelative:homework\\problem4.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F61FCA28-53FD-4FCC-B156-9FFEB4244880}|Homework\\Homework.csproj|c:\\users\\zxzy2\\onedrive\\desktop\\code\\ntut\\gameprogramming\\wk2_pj\\homework\\homework\\problem1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F61FCA28-53FD-4FCC-B156-9FFEB4244880}|Homework\\Homework.csproj|solutionrelative:homework\\problem1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Problem4.cs",
+              "DocumentMoniker": "C:\\Users\\zxzy2\\OneDrive\\Desktop\\code\\NTUT\\GameProgramming\\WK2_PJ\\Homework\\Homework\\Problem4.cs",
+              "RelativeDocumentMoniker": "Homework\\Problem4.cs",
+              "ToolTip": "C:\\Users\\zxzy2\\OneDrive\\Desktop\\code\\NTUT\\GameProgramming\\WK2_PJ\\Homework\\Homework\\Problem4.cs",
+              "RelativeToolTip": "Homework\\Problem4.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAADUAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-17T11:42:01.831Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Problem1.cs",
+              "DocumentMoniker": "C:\\Users\\zxzy2\\OneDrive\\Desktop\\code\\NTUT\\GameProgramming\\WK2_PJ\\Homework\\Homework\\Problem1.cs",
+              "RelativeDocumentMoniker": "Homework\\Problem1.cs",
+              "ToolTip": "C:\\Users\\zxzy2\\OneDrive\\Desktop\\code\\NTUT\\GameProgramming\\WK2_PJ\\Homework\\Homework\\Problem1.cs",
+              "RelativeToolTip": "Homework\\Problem1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-17T07:18:01.461Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

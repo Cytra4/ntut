@@ -1,0 +1,60 @@
+using System;
+using System.Runtime.InteropServices;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace Homework1
+{
+    class HW1
+    {
+        static void Main(string[] args)
+        {
+            string data = """
+            成婉財 27 91 21 33 13
+            翁雅婷 96 90 40 55 69
+            袁維茹 38 85 72 13 34
+            黃士哲 81 40 24 93 79
+            郭珮珊 72 33 32 83 73
+            陳儀琬 78 55 22 41 62
+            李碧彥 30 48 13 93 70
+            梁健玉 23 89 10 44 24
+            許雅淑 90 11 33 27 67
+            蕭宛新 29 64 64 90 43
+            """;
+
+            Console.WriteLine("輸入科目(1~5):");
+            int subject = Convert.ToInt32(Console.ReadLine());
+            if (subject > 5 || subject < 1)
+            {
+                Console.WriteLine("不是哥們");
+            }
+            else
+            {
+                Sorting(data, subject);
+            }
+        }
+
+        static void Sorting(string data, int subject)
+        {
+            string[] d_line = data.Split('\n');
+            for (int i = 0; i < d_line.Length; i++)
+            {
+                for (int j = i+1; j<d_line.Length; j++)
+                {
+                    string[] field1 = d_line[i].Split(" ");
+                    string[] field2 = d_line[j].Split(" ");
+                    if (Convert.ToInt32(field1[subject]) < Convert.ToInt32(field2[subject]))
+                    {
+                        string tmp = d_line[i];
+                        d_line[i] = d_line[j];
+                        d_line[j] = tmp;
+                    }
+                }
+            }
+
+            foreach (string d in d_line)
+            {
+                Console.WriteLine(d);
+            }
+        }
+    }
+}

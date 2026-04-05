@@ -13,6 +13,8 @@ glimpse(summer)
 #change variable type
 # %>% -> then (shortcut: ctrl + shift + m)
 # factor -> <fct> -> categorical variable
+# *categorical type: <fct> and <chr>
+# *continuous type: <dbl> and <int>
 summer<-summer %>% 
   mutate(gender = as.factor(gender),
          Degree = as.factor(Degree),
@@ -52,3 +54,75 @@ lab1 %>% count(cgpa) %>% arrange(desc(cgpa))
 
 table(lab1$greq)
 prop.table(table(lab1$greq)) * 100
+
+#==================================================
+
+#List more detailed info of the data
+summary(summer)
+
+#Another way to do it
+describe(summer)
+
+#*Tidyverse way of doing it
+summer %>% summary()
+summer %>% describe()
+
+#Draw a bar chart
+summer %>% 
+  ggplot(mapping = aes (x = gender)) +
+  geom_bar()
+
+summer %>% 
+  ggplot(mapping = aes (x = Goal)) +
+  geom_bar()
+
+#Draw a histograms chart
+#*Difference usage of bar and histograms chart:
+#Bar: Used for categorical, Histograms: Used for continuous
+summer %>% 
+  ggplot(mapping = aes (x = Temp)) +
+  geom_histogram()
+
+summer %>% 
+  ggplot(mapping = aes (x = Money)) +
+  geom_histogram()
+
+#Draw a density chart
+summer %>% 
+  ggplot(mapping = aes (x = Temp)) +
+  geom_density()
+
+summer %>% 
+  ggplot(mapping = aes (x = Money)) +
+  geom_density()
+
+#Draw a boxplot
+# x = categorical, y = continuous
+summer %>% 
+  ggplot(mapping = aes (x = gender, y = Temp)) +
+  geom_boxplot()
+
+summer %>% 
+  ggplot(mapping = aes (x = gender, y = Money)) +
+  geom_boxplot()
+
+#==================================================
+
+#*fill can be used to color the bar
+lab1 %>% 
+  ggplot(mapping = aes (x = race, fill = race)) +
+  geom_bar()
+
+lab1 %>% 
+  ggplot(mapping = aes (x = greq)) +
+  geom_histogram()
+
+lab1 %>% 
+  ggplot(mapping = aes (x = race, y = greq)) +
+  geom_boxplot()
+
+#==================================================
+
+#For Normal distribution, skew and kurtosis values should be in -3 to 3
+#For Standard(Z) normal distribution, mean should be 0, sd(標準差) should be 1
+summer %>% summary()

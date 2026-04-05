@@ -1,0 +1,2 @@
+This is destination.txt
+Run fileCopy and copy the content from source.txt to here 

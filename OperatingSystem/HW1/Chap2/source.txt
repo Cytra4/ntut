@@ -1,0 +1,2 @@
+This is source.txt
+Copy this to destination.txt

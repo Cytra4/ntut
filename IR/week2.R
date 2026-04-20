@@ -126,3 +126,5 @@ lab1 %>%
 #For Normal distribution, skew and kurtosis values should be in -3 to 3
 #For Standard(Z) normal distribution, mean should be 0, sd(標準差) should be 1
 summer %>% summary()
+
+#In Z normal distribution, sd in -1 ~ 1 range means 68%, -2 ~ 2 range means 95%

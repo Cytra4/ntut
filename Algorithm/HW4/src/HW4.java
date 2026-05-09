@@ -29,6 +29,18 @@ class ExtendedCell extends Cell {
 		super(maze);
 	}
 	
+	public Cell next;  // or ExtendedCell next;
+
+    private boolean marked;
+
+    public boolean isMarked() {
+        return marked;
+    }
+
+    public void setMarked(boolean value) {
+        marked = value;
+    }
+	
 	// Question 1
 
 	/**
@@ -39,7 +51,34 @@ class ExtendedCell extends Cell {
 	boolean searchPath() {
 		maze.slow(); // slow down the search animation (to help debugging)
 
-		throw new Error("method searchPath() to be completed (Question 1)");
+		// throw new Error("method searchPath() to be completed (Question 1)");
+
+		// 1. If this cell is already marked, we can't use it
+		if (isMarked()) {
+			return false;
+		}
+
+		// 2. Mark this cell as part of the current path
+		setMarked(true);
+
+		// 3. If this is the exit, we're done
+		if (isExit()) {
+			return true;
+		}
+
+		// 4. Explore neighbors (only those without walls)
+		for (Cell neighbor : getNeighbors(false)) {
+			ExtendedCell next = (ExtendedCell) neighbor;
+
+			if (next.searchPath()) {
+				return true; // found a valid path
+			}
+		}
+
+		// 5. Backtrack: unmark this cell (since no path worked)
+		setMarked(false);
+
+    	return false;
 	}
 
 	// Question 2
@@ -50,9 +89,29 @@ class ExtendedCell extends Cell {
 	void generateRec() {
 		maze.slow();
 
-		throw new Error("method generateRec() to be completed (Question 2)");
-	}
+		// throw new Error("method generateRec() to be completed (Question 2)");
 
+		// 1. Get all neighbors (ignore walls so we see all directions)
+		List<Cell> neighbors = getNeighbors(true);
+
+		// 2. Shuffle to randomize maze structure
+		Collections.shuffle(neighbors);
+
+		// 3. Try each neighbor
+		for (Cell neighbor : neighbors) {
+			ExtendedCell next = (ExtendedCell) neighbor;
+
+			// 4. Only proceed if neighbor is isolated (no passages yet)
+			if (next.getNeighbors(false).isEmpty()) {
+				
+				// 5. Break wall to create passage
+				breakWall(next);
+
+				// 6. Recurse
+				next.generateRec();
+			}
+		}
+	}
 }
 
 /**
@@ -77,10 +136,37 @@ class Maze {
 		while(!cells.isEmpty()) {
 			slow();
 
-			 throw new Error("method generateIter() to be completed (Question 3)");
+			// throw new Error("method generateIter() to be completed (Question 3)");
+			
+			// 1. Get current cell
+			ExtendedCell current = (ExtendedCell) cells.peek();
 
-		}
+			// 2. Get neighbors and shuffle
+			List<Cell> neighbors = current.getNeighbors(true);
+			Collections.shuffle(neighbors);
 
+			boolean found = false;
+
+			// 3. Try to find an isolated neighbor
+			for (Cell neighbor : neighbors) {
+				ExtendedCell next = (ExtendedCell) neighbor;
+
+				if (next.getNeighbors(false).isEmpty()) {
+					// Found valid direction
+
+					current.breakWall(next); // create passage
+					cells.add(next);         // go deeper
+
+					found = true;
+					break; // IMPORTANT: only take ONE neighbor
+				}
+			}
+
+			// 4. If no neighbor worked → backtrack
+			if (!found) {
+				cells.pop();
+			}
+    	}
 	}
 
 
@@ -90,7 +176,54 @@ class Maze {
 	 * generate a maze using Wilson's algorithm
 	 */
 	void generateWilson() {
-		throw new Error("method generateWilson() to be completed (Question 4)");
+		// throw new Error("method generateWilson() to be completed (Question 4)");
+		List<Cell> allCells = new ArrayList<>();
+
+		// 1. Collect all cells
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				allCells.add(getCell(i, j));
+			}
+		}
+
+		// 2. Shuffle for randomness
+		Collections.shuffle(allCells);
+
+		// 3. Mark first cell
+		ExtendedCell first = (ExtendedCell) allCells.get(0);
+		first.setMarked(true);
+
+		// 4. Process remaining cells
+		for (Cell c : allCells) {
+			ExtendedCell start = (ExtendedCell) c;
+
+			if (start.isMarked()) continue;
+
+			// ---- Random walk ----
+			ExtendedCell current = start;
+
+			while (!current.isMarked()) {
+				List<Cell> neighbors = current.getNeighbors(true);
+				Collections.shuffle(neighbors);
+
+				ExtendedCell next = (ExtendedCell) neighbors.get(0);
+
+				current.next = next; // store direction
+				current = next;
+			}
+
+			// ---- Carve path ----
+			current = start;
+
+			while (!current.isMarked()) {
+				ExtendedCell next = (ExtendedCell) current.next;
+
+				current.breakWall(next);
+				current.setMarked(true);
+
+				current = next;
+			}
+		}
 	}
 
 	/**

@@ -139,10 +139,10 @@ public class KDTree {
 	}
 
 	// Soulution 1:
-	// static KDTree largest(Vector<KDTree> list) {
+	// static KDTree largest(Vector<KDTree> subs) {
 	// KDTree best = null;
 	// int bestSize = -1;
-	// for (KDTree t : list) {
+	// for (KDTree t : subs) {
 	// int s = size(t);
 	// if (s > bestSize) {
 	// bestSize = s;
@@ -153,34 +153,44 @@ public class KDTree {
 	// }
 
 	// static Vector<double[]> palette(KDTree tree, int maxpoints) {
-	// Vector<KDTree> regions = new Vector<>();
-	// regions.add(tree);
+	// Vector<KDTree> subtrees = new Vector<>();
+	// subtrees.add(tree);
 
-	// while (regions.size() < maxpoints) {
+	// while (subtrees.size() < maxpoints) {
 
-	// KDTree biggest = largest(regions);
-	// regions.remove(biggest);
+	// KDTree biggest = largest(subtrees);
+	// subtrees.remove(biggest);
 
-	// if (biggest == null || (biggest.left == null && biggest.right == null)) {
-	// regions.add(biggest);
+	// if (biggest == null || (biggest.left == null && biggest.right == null)){
+	// subtrees.add(biggest);
 	// break;
 	// }
 
 	// if (biggest.left != null)
-	// regions.add(biggest.left);
+	// subtrees.add(biggest.left);
 	// if (biggest.right != null)
-	// regions.add(biggest.right);
+	// subtrees.add(biggest.right);
 	// }
 
-	// Vector<double[]> palette = new Vector<>();
-	// for (KDTree t : regions) {
-	// palette.add(average(t));
+	// Vector<double[]> result = new Vector<>();
+	// for (KDTree t : subtrees) {
+	// result.add(average(t));
 	// }
 
-	// return palette;
+	// return result;
 	// }
 
 	// Solution 2
+	static void varianceRec(KDTree tree, double[] avg, double[] acc) {
+		if (tree == null)
+			return;
+
+		acc[0] += sqDist(tree.point, avg);
+
+		varianceRec(tree.left, avg, acc);
+		varianceRec(tree.right, avg, acc);
+	}
+	
 	static double variance(KDTree tree) {
 		if (tree == null)
 			return 0;
@@ -193,21 +203,11 @@ public class KDTree {
 		return acc[0] / size(tree);
 	}
 
-	static void varianceRec(KDTree tree, double[] avg, double[] acc) {
-		if (tree == null)
-			return;
-
-		acc[0] += sqDist(tree.point, avg);
-
-		varianceRec(tree.left, avg, acc);
-		varianceRec(tree.right, avg, acc);
-	}
-
-	static KDTree bestToSplit(Vector<KDTree> list) {
+	static KDTree bestToSplit(Vector<KDTree> subs) {
 		KDTree best = null;
 		double bestScore = -1;
 
-		for (KDTree t : list) {
+		for (KDTree t : subs) {
 			double score = variance(t) * size(t);
 			if (score > bestScore) {
 				bestScore = score;
@@ -218,29 +218,29 @@ public class KDTree {
 	}
 
 	static Vector<double[]> palette(KDTree tree, int maxpoints) {
-		Vector<KDTree> regions = new Vector<>();
-		regions.add(tree);
+		Vector<KDTree> subtrees = new Vector<>();
+		subtrees.add(tree);
 
-		while (regions.size() < maxpoints) {
-			KDTree t = bestToSplit(regions);
-			regions.remove(t);
+		while (subtrees.size() < maxpoints) {
+			KDTree t = bestToSplit(subtrees);
+			subtrees.remove(t);
 
 			if (t == null || (t.left == null && t.right == null)) {
-				regions.add(t);
+				subtrees.add(t);
 				break;
 			}
 
 			if (t.left != null)
-				regions.add(t.left);
+				subtrees.add(t.left);
 			if (t.right != null)
-				regions.add(t.right);
+				subtrees.add(t.right);
 		}
 
-		Vector<double[]> palette = new Vector<>();
-		for (KDTree t : regions)
-			palette.add(average(t));
+		Vector<double[]> result = new Vector<>();
+		for (KDTree t : subtrees)
+			result.add(average(t));
 
-		return palette;
+		return result;
 	}
 
 	public String pointToString() {
